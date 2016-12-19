@@ -1,0 +1,26 @@
+#dropArea {
+	background-color: #004040;
+	border: solid 3px #004040;
+	color: #ffffff;
+	min-height: 50px;
+	padding: 20px;
+}
+#dropArea.dropover {
+	background-color: #cccccc;
+	border: solid 3px #fcfcfc;
+	color: #ffffff;
+}
+
+#files:empty::before {
+	color: #ccc;
+	content: "(Files data will be shown here.)";
+}
+#files img {
+	border: solid 1px #ccc;
+	cursor: pointer;
+	height: auto;
+	margin: 0 10px;
+	max-height: 128px;
+	max-width: 128px;
+	width: auto;
+}

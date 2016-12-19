@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="css.css">
+		<script type="text/javascript" src="file-select.js"></script>
+		<title>imagesToBase64</title>
+	</head>
+	<body>
+		<div id="dropArea" effectAllowed="move">drop image files here.</div>
+
+		<ul id="files"></ul>
+
+		<script type="text/javascript" src="drag-drop.js"></script>
+
+		<div class="container">
+		    <button id="fileSelect" type="button" class="btn btn-primary btn-lg btn-block">ファイル選択</button>
+		    <button id="folderSelect" type="button" class="btn btn-default btn-lg btn-block">フォルダ選択</button>
+		</div>
+
+		<script>
+		// node_integrationを行うとmodule.exports関係の事情でjQuery/$がundefinedになるので
+		// それの回避コード
+		window.jQuery = window.$ = require('./js/jquery-2.1.4.min.js');
+		</script>
+		<script src="./js/bootstrap.min.js"></script>
+		<script>
+		/**
+		* ここからメインディッシュ
+		*/
+		var remote = require('remote');
+		var dialog = remote.require('dialog');
+		var browserWindow = remote.require('browser-window');
+
+		//  以下選択されたファイルをいじりたい場合はnode.jsのfsが使える
+		var fs = require('fs');
+
+		$(function(){
+		    // ボタンが押されたときの挙動
+		    $('#fileSelect').on('click', function(){
+		        var focusedWindow = browserWindow.getFocusedWindow();
+
+		        dialog.showOpenDialog(focusedWindow, {
+		            properties: ['openFile'],
+		            filters: [{
+		                name: 'テキストファイル',
+		                extensions: ['txt']
+		            }]
+		        }, function(files){
+		            files.forEach(function(file){
+		                console.log(file);
+		            });
+		        });
+		    });
+
+		    $('#folderSelect').on('click', function(){
+		        var focusedWindow = browserWindow.getFocusedWindow();
+
+		        dialog.showOpenDialog(focusedWindow, {
+		            properties: ['openDirectory']
+		        }, function(directories){
+		            directories.forEach(function(directory){
+		                console.log(directory);
+		            });
+		        });
+		    });
+		});
+		</script>
+
+
+
+	</body>
+</html>
